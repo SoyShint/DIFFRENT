@@ -45,7 +45,7 @@
             top: 0;
             width: 100%;
             background-color: rgba(0, 0, 0, 0.8);
-            padding: 1rem;
+            padding: 2rem;
             backdrop-filter: blur(10px);
             z-index: 1000;
         }
@@ -66,9 +66,9 @@
         .nav-links a {
             color: var(--text-color);
             text-decoration: none;
-            font-weight: 500;
+            font-weight: 1000;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             position: relative;
         }
 
@@ -179,6 +179,7 @@
         .social-links .email { background: linear-gradient(45deg, #FF5722, #FF7043); }
         .social-links .tiktok { background: linear-gradient(45deg, #000000, #333333); }
         .social-links .discord { background: linear-gradient(45deg, #5865F2, #4752C4); }
+        .social-links .youtube { background: linear-gradient(45deg, #FF0000, #CC0000); }
 
         .section {
             padding: 6rem 2rem;
@@ -255,14 +256,19 @@
     </style>
 </head>
 <body>
+    
     <div class="particles"></div>
     
     <nav class="navbar">
         <div class="nav-content">
             <div class="nav-links">
-                <a href="#home">Inicio</a>
-                <a href="#about">Sobre mí</a>
-                <a href="#clips">Videos</a>
+                <a href="index.html#home">Inicio</a>
+                <a href="about.html">Sobre mí</a>
+                <a href="videos.html">Videos</a>
+                <a href="galeria.html">Galería</a>
+                <a href="envivo.html">En Vivo</a>
+                <a href="eventos.html">Clan_200</a>
+                <a href="mafia.html">Team Mafia</a>
             </div>
         </div>
     </nav>
@@ -271,7 +277,7 @@
         <div class="hero-content">
             <img src="images/diff.png" alt="Diffrent" class="profile-img">
             <h1 class="title">Diffrent</h1>
-            <p class="subtitle">Lider del clan_200 | Team mafiaARG</p>
+            <p class="subtitle">Lider del clan_200 | Team mafia</p>
             
             <div class="social-links">
                 <a href="https://kick.com/diffrent" target="_blank" class="kick">
@@ -295,85 +301,12 @@
                 <a href="https://discord.gg/jzz6DJCKzj" target="_blank" class="discord">
                     <i class="fab fa-discord"></i> Discord
                 </a>
+                <a href="https://www.youtube.com/@Diffrent_200/videos" target="_blank" class="youtube">
+                    <i class="fab fa-youtube"></i> YouTube
+                </a>
             </div>
-        </div>
-    </section>
-
-    <section id="about" class="section">
-        <h2 class="section-title">Sobre Diffrent</h2>
-        <div style="text-align: center; max-width: 800px; margin: 0 auto;">
-            <p>
-                <strong>Diffrent</strong>, también conocido como el jugador 200, es un streamer y creador de contenido 
-                <strong>uruguayo</strong> que ha ganado notoriedad en el ámbito del entretenimiento digital. Se destacó por su 
-                participación en <strong>Squid Craft Games 2</strong>, un evento de Minecraft inspirado en la serie 
-                <em>El juego del calamar</em>, organizado por <strong>AuronPlay, Rubius y Komanche</strong>. A pesar de ser un streamer 
-                relativamente pequeño en comparación con otros participantes, su selección como el jugador número 200 marcó un punto 
-                de inflexión en su carrera.
-            </p>
-            <h3>Características y comunidad</h3>
-            <p>
-                Diffrent es conocido por su humildad y cercanía con su comunidad, a la que llama <em>"El clan de los 200"</em> o 
-                simplemente <em>"200"</em>, en referencia a su número de participante en Squid Craft Games 2. Su enfoque en la interacción 
-                con sus seguidores es distintivo, ya que fomenta un ambiente de confianza y camaradería, donde los miembros pueden 
-                interactuar con él y entre ellos con apodos y bromas, siempre dentro de los límites del respeto.
-            </p>
-            <h3>Participaciones destacadas</h3>
-            <p>
-                Además de su participación en <strong>Squid Craft Games 2</strong>, Diffrent ha formado parte de varios eventos importantes 
-                dentro de la comunidad hispanohablante de Minecraft y juegos de supervivencia:
-            </p>
-            <ul style="text-align: left; max-width: 800px; margin: 0 auto;">
-                <li>
-                    <strong>Desafío:</strong> Se integró al reconocido <em>Team Mafia</em>, un equipo conformado por creadores influyentes 
-                    como Sapnap, Spreen y Farfadox.
-                </li>
-                <li>
-                    <strong>Hunt and Run:</strong> Evento organizado por <em>illoJuan</em>, donde varios streamers compiten en un formato 
-                    de caza y supervivencia.
-                </li>
-                <li>
-                    <strong>Bellum:</strong> Evento competitivo dentro de <em>Rust</em> que reúne a creadores de contenido de renombre.
-                </li>
-                <li>
-                    <strong>Squid French:</strong> Evento organizado por <em>Shadoune</em>, donde logró destacar como campeón junto a su equipo.
-                </li>
-            </ul>
-            </p>
-        </div>
-    </section>
-
-    <section id="clips" class="section">
-        <h2 class="section-title">Videos recomendados</h2>
-        <div class="clips-container">
-            <div class="clip">
-                <iframe
-                    src="https://www.youtube.com/embed/IfIqOtXhKKs"
-                    title="Clip 1"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen>
-                </iframe>
-            </div>
-            <div class="clip">
-                <iframe
-                    src="https://www.youtube.com/embed/fhhoITzeoZA?si=3BtkVUetvR7kS7Fg"
-                    title="Clip 2"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen>
-                </iframe>
-            </div>
-            <div class="clip">
-                <iframe
-                    src="https://www.youtube.com/embed/gNV5QjdtUXs?si=TFlIKKvCRcFnEQaK"
-                    title="Clip 3"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen>
-                </iframe>
-            </div>
-        </div>
-    </section>
+        </div> 
+        </section>
 
 </body>
 </html>

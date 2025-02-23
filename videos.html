@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería - Diffrent</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #00ff00;
+            --secondary-color: #9146FF;
+            --text-color: #ffffff;
+            --bg-color: #000000;
+            --card-bg: #111111;
+            --card-shadow: rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 1rem 2rem;
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            font-size: 1rem;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .gallery-container {
+            padding-top: 100px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-bottom: 50px;
+            text-align: center;
+        }
+
+        .gallery-title {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 0 2rem;
+        }
+
+        .gallery-item {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px var(--card-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px var(--card-shadow);
+        }
+
+        .gallery-item iframe {
+            width: 100%;
+            height: 200px;
+            border: none;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.9);
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-links">
+            <a href="index.html#home">Inicio</a>
+            <a href="about.html">Sobre mí</a>
+            <a href="videos.html">Videos</a>
+            <a href="galeria.html">Galería</a>
+            <a href="envivo.html">En Vivo</a>
+            <a href="eventos.html">Clan_200</a>
+            <a href="mafia.html">Team Mafia</a>
+        </div>
+    </nav>
+
+    <div class="gallery-container">
+        <h1 class="gallery-title">Galería de Videos</h1>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <iframe src="https://www.youtube.com/embed/QxJG7ECu9rI" allowfullscreen></iframe>
+            </div>
+            <div class="gallery-item">
+                <iframe src="https://www.youtube.com/embed/fhhoITzeoZA" allowfullscreen></iframe>
+            </div>
+            <div class="gallery-item">
+                <iframe src="https://www.youtube.com/embed/zKQlJVTc0Rc" allowfullscreen></iframe>
+            </div>
+            <div class="gallery-item">
+                <iframe src="https://www.youtube.com/embed/gNV5QjdtUXs" allowfullscreen></iframe>
+            </div>
+            <div class="gallery-item">
+                <iframe src="https://www.youtube.com/embed/9HRtEMtsYgE" allowfullscreen></iframe>
+            </div>
+            <div class="gallery-item">
+                <iframe src="https://www.youtube.com/embed/629YRgcu8Eo" allowfullscreen></iframe>
+            </div>
+            <div class="gallery-item">
+                <iframe src="https://www.youtube.com/embed/UzqsoA6L-q0" allowfullscreen></iframe>
+            </div>
+            <div class="gallery-item">
+                <iframe src="https://www.youtube.com/embed/EfhAph33Mn8" allowfullscreen></iframe>
+            </div>
+            <div class="gallery-item">
+                <iframe src="https://www.youtube.com/embed/xLLIJKm2850" allowfullscreen></iframe>
+            </div>
+            <div class="gallery-item">
+                <iframe src="https://www.youtube.com/embed/O5ltU7iEAR8" allowfullscreen></iframe>
+            </div>
+    </div>
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 Diffrent. hecho con ❤️ por <a href="#">SoyShint</a>.</p>
+    </footer>
+</body>
+</html>

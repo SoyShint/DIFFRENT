@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería - Diffrent</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #00ff00;
+            --secondary-color: #9146FF;
+            --text-color: #ffffff;
+            --bg-color: #000000;
+            --card-bg: #111111;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 1000;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .gallery-container {
+            padding-top: 120px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-bottom: 50px;
+        }
+
+        .gallery-title {
+            text-align: center;
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .gallery-item .info {
+            padding: 15px;
+            color: var(--text-color);
+        }
+
+        .gallery-item .info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .gallery-item .info p {
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1001;
+            overflow: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90vh;
+            margin: auto;
+            display: block;
+            position: relative;
+        }
+
+        .modal-image {
+            max-width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+        }
+
+        .modal-description {
+            color: var(--text-color);
+            text-align: center;
+            padding: 20px;
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: var(--text-color);
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                padding: 1rem;
+            }
+
+            .modal-content {
+                width: 95%;
+            }
+
+            .close {
+                top: 10px;
+                right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles"></div>
+    
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="nav-links">
+                <a href="index.html#home">Inicio</a>
+                <a href="about.html">Sobre mí</a>
+                <a href="videos.html">Videos</a>
+                <a href="galeria.html">Galería</a>
+                <a href="envivo.html">En Vivo</a>
+                <a href="eventos.html">Clan_200</a>
+                <a href="mafia.html">Team Mafia</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="gallery-container">
+        <h1 class="gallery-title">Galería</h1>
+        <div class="gallery-grid">
+            <div class="gallery-item" onclick="openModal(this)">
+                <img src="images/diff7.png" alt="Evento Diffrent">
+                <div class="info">
+                    <h3>PRIMER EXTENSIBLE EN KICK</h3>
+                    <p>La rompimos</p>
+                </div>
+            </div>
+            <div class="gallery-item" onclick="openModal(this)">
+                <img src="images/diff5.png" alt="Otro evento">
+                <div class="info">
+                    <h3>GANÉ LOS SQUIDFRENCH</h3>
+                    <p>Campeón de los squidfrench de Shadoune</p>
+                </div>
+            </div>
+            <div class="gallery-item" onclick="openModal(this)">
+                <img src="images/diff1.png" alt="Otro evento">
+                <div class="info">
+                    <h3>VIAJE A ARGENTINA</h3>
+                    <p>Conocemos al team mafia en IRL</p>
+                </div>
+            </div>
+            <div class="gallery-item" onclick="openModal(this)">
+                <img src="images/diff4.png" alt="Otro evento">
+                <div class="info">
+                    <h3>JUGAMOS EL CTM DEL RICH</h3>
+                    <p>Jugamos con los pibes</p>
+                </div>
+            </div>
+            <div class="gallery-item" onclick="openModal(this)">
+                <img src="images/diff3.png" alt="Otro evento">
+                <div class="info">
+                    <h3>ONE BLOCK CON PIRU</h3>
+                    <p>Jugamos un oneblock con piru</p>
+                </div>
+            </div>
+            <div class="gallery-item" onclick="openModal(this)">
+                <img src="images/diff2.png" alt="Otro evento">
+                <div class="info">
+                    <h3>SQUIDGAMES DE BOBYCRAFT</h3>
+                    <p>Jugamos squids de bobycraft</p>
+                </div>
+            </div>
+            <div class="gallery-item" onclick="openModal(this)">
+                <img src="images/diff6.png" alt="Otro evento">
+                <div class="info">
+                    <h3>JUEGO IT TAKES TWO CON NIA</h3>
+                    <p>Jugamos con nia</p>
+                </div>
+            </div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div class="modal-content">
+            <img class="modal-image" id="modalImage" src="" alt="">
+            <p class="modal-description" id="modalDescription"></p>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const modalDesc = document.getElementById('modalDescription');
+
+        function openModal(element) {
+            modal.style.display = "flex";
+            modalImg.src = element.querySelector('img').src;
+            modalDesc.textContent = element.querySelector('.info h3').textContent;
+        }
+
+        function closeModal() {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+ <!-- Footer -->
+ <footer>
+    <p>© 2025 Diffrent. hecho con ❤️ por <a href="#">SoyShint</a>.</p>
+</footer>
+</html>
