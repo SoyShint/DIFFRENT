@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diffrent - Streamer Uruguayo</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #00ff00;
+            --secondary-color: #9146FF;
+            --text-color: #ffffff;
+            --bg-color: #000000;
+            --card-bg: #111111;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            overflow-x: hidden;
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            background: radial-gradient(circle at center, #111111 0%, #000000 100%);
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 1rem;
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            padding-top: 100px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0, 0, 0, 0.1) 0%, rgba(0,0,0,0.9) 100%);
+            z-index: -1;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .profile-img {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            margin-bottom: 2rem;
+            border: 4px solid var(--primary-color);
+            box-shadow: 0 0 30px rgba(0,255,0,0.3);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .title {
+            font-size: 4rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            text-shadow: 0 0 10px rgba(0,255,0,0.5);
+            font-weight: 800;
+        }
+
+        .subtitle {
+            font-size: 1.8rem;
+            color: var(--text-color);
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .social-links a {
+            color: var(--text-color);
+            font-size: 1.2rem;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .social-links .kick { background: linear-gradient(45deg, #40ff40, #00cc00); }
+        .social-links .twitch { background: linear-gradient(45deg, #9146FF, #6441A5); }
+        .social-links .instagram { background: linear-gradient(45deg, #E1306C, #C13584); }
+        .social-links .twitter { background: linear-gradient(45deg, #1DA1F2, #0d8ecf); }
+        .social-links .email { background: linear-gradient(45deg, #FF5722, #FF7043); }
+        .social-links .tiktok { background: linear-gradient(45deg, #000000, #333333); }
+        .social-links .discord { background: linear-gradient(45deg, #5865F2, #4752C4); }
+
+        .section {
+            padding: 6rem 2rem;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        .about-text {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: var(--text-color);
+        }
+
+        .clips-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .clip {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .clip:hover {
+            transform: translateY(-10px);
+        }
+
+        .clip iframe {
+            width: 100%;
+            height: 200px;
+            border: none;
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2.5rem;
+            }
+
+            .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .social-links {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .social-links a {
+                width: 80%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles"></div>
+    
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="nav-links">
+                <a href="#home">Inicio</a>
+                <a href="#about">Sobre mí</a>
+                <a href="#clips">Videos</a>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <img src="images/diff.png" alt="Diffrent" class="profile-img">
+            <h1 class="title">Diffrent</h1>
+            <p class="subtitle">Lider del clan_200 | Team mafiaARG</p>
+            
+            <div class="social-links">
+                <a href="https://kick.com/diffrent" target="_blank" class="kick">
+                    <i class="fas fa-play"></i> Kick
+                </a>
+                <a href="https://twitch.tv/diffrent" target="_blank" class="twitch">
+                    <i class="fab fa-twitch"></i> Twitch
+                </a>
+                <a href="https://www.instagram.com/diffrent.200/" target="_blank" class="instagram">
+                    <i class="fab fa-instagram"></i> Instagram
+                </a>
+                <a href="https://x.com/diffrent_200" target="_blank" class="twitter">
+                    <i class="fab fa-twitter"></i> X (Twitter)
+                </a>
+                <a href="mailto:contacto.dlffrent@gmail.com" target="_blank" class="email">
+                    <i class="fas fa-envelope"></i> Correo
+                </a>
+                <a href="https://www.tiktok.com/@dlffrent_" target="_blank" class="tiktok">
+                    <i class="fab fa-tiktok"></i> TikTok
+                </a>
+                <a href="https://discord.gg/jzz6DJCKzj" target="_blank" class="discord">
+                    <i class="fab fa-discord"></i> Discord
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <h2 class="section-title">Sobre Diffrent</h2>
+        <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+            <p>
+                <strong>Diffrent</strong>, también conocido como el jugador 200, es un streamer y creador de contenido 
+                <strong>uruguayo</strong> que ha ganado notoriedad en el ámbito del entretenimiento digital. Se destacó por su 
+                participación en <strong>Squid Craft Games 2</strong>, un evento de Minecraft inspirado en la serie 
+                <em>El juego del calamar</em>, organizado por <strong>AuronPlay, Rubius y Komanche</strong>. A pesar de ser un streamer 
+                relativamente pequeño en comparación con otros participantes, su selección como el jugador número 200 marcó un punto 
+                de inflexión en su carrera.
+            </p>
+            <h3>Características y comunidad</h3>
+            <p>
+                Diffrent es conocido por su humildad y cercanía con su comunidad, a la que llama <em>"El clan de los 200"</em> o 
+                simplemente <em>"200"</em>, en referencia a su número de participante en Squid Craft Games 2. Su enfoque en la interacción 
+                con sus seguidores es distintivo, ya que fomenta un ambiente de confianza y camaradería, donde los miembros pueden 
+                interactuar con él y entre ellos con apodos y bromas, siempre dentro de los límites del respeto.
+            </p>
+            <h3>Participaciones destacadas</h3>
+            <p>
+                Además de su participación en <strong>Squid Craft Games 2</strong>, Diffrent ha formado parte de varios eventos importantes 
+                dentro de la comunidad hispanohablante de Minecraft y juegos de supervivencia:
+            </p>
+            <ul style="text-align: left; max-width: 800px; margin: 0 auto;">
+                <li>
+                    <strong>Desafío:</strong> Se integró al reconocido <em>Team Mafia</em>, un equipo conformado por creadores influyentes 
+                    como Sapnap, Spreen y Farfadox.
+                </li>
+                <li>
+                    <strong>Hunt and Run:</strong> Evento organizado por <em>illoJuan</em>, donde varios streamers compiten en un formato 
+                    de caza y supervivencia.
+                </li>
+                <li>
+                    <strong>Bellum:</strong> Evento competitivo dentro de <em>Rust</em> que reúne a creadores de contenido de renombre.
+                </li>
+                <li>
+                    <strong>Squid French:</strong> Evento organizado por <em>Shadoune</em>, donde logró destacar como campeón junto a su equipo.
+                </li>
+            </ul>
+            </p>
+        </div>
+    </section>
+
+    <section id="clips" class="section">
+        <h2 class="section-title">Videos recomendados</h2>
+        <div class="clips-container">
+            <div class="clip">
+                <iframe
+                    src="https://www.youtube.com/embed/IfIqOtXhKKs"
+                    title="Clip 1"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
+            </div>
+            <div class="clip">
+                <iframe
+                    src="https://www.youtube.com/embed/fhhoITzeoZA?si=3BtkVUetvR7kS7Fg"
+                    title="Clip 2"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
+            </div>
+            <div class="clip">
+                <iframe
+                    src="https://www.youtube.com/embed/gNV5QjdtUXs?si=TFlIKKvCRcFnEQaK"
+                    title="Clip 3"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
