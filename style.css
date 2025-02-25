@@ -1,29 +1,58 @@
-.gallery-item iframe {
-    display: block;
-    width: 100%;
-    height: 200px;
-    border: none;
+/* Ajustar el contenido principal para evitar superposición */
+body {
+    margin: 0;
+    padding: 0;
 }
-
-.gallery-item iframe:empty {
-    background-color: #333;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1rem;
-    text-align: center;
-    padding: 1rem;
-}
-
 
 .particles {
-    position: fixed;
-    top: 0;
+    margin-top: 60px; /* Ajusta según la altura de la navbar */
+}
+
+/* Estilos para la navbar */
+.navbar {
+    position: fixed; /* Fija la navbar en la parte superior */
+    top: 0; /* Asegura que esté en la parte superior */
     left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: -1;
-    background: radial-gradient(circle at center, #1111 0%, #0000 100%);
+    width: 100%; /* Ocupa todo el ancho de la pantalla */
+    background-color: #000; /* Fondo negro */
+    color: white; /* Texto blanco */
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra para destacar */
+    padding: 10px 0; /* Ajusta el espaciado vertical */
+}
+
+.nav-content {
+    display: flex;
+    justify-content: center; /* Centra los enlaces */
+    align-items: center;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px; /* Espaciado uniforme entre los enlaces */
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #00bcd4; /* Cambia el color al pasar el mouse */
+}
+
+/* Estilos responsive para pantallas pequeñas */
+@media (max-width: 768px) {
+    .nav-links {
+        flex-direction: column; /* Cambia a diseño vertical */
+        align-items: center;
+        gap: 10px; /* Reduce el espaciado entre enlaces */
+    }
+
+    .navbar {
+        padding: 10px; /* Ajusta el espaciado en pantallas pequeñas */
+    }
 }
