@@ -382,6 +382,43 @@
             }
         });
     </script>
+    <style>
+        /* Estilo del contenedor del botón */
+        .back-button {
+            position: fixed;
+            top: 20px; /* Distancia desde la parte superior */
+            left: 20px; /* Distancia desde la izquierda */
+            z-index: 1000; /* Asegura que esté por encima de otros elementos */
+        }
+
+        /* Estilo del enlace */
+        .back-button a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px; /* Tamaño del botón */
+            height: 50px;
+            background-color: #000; /* Color de fondo */
+            color: white; /* Color del ícono */
+            text-decoration: none;
+            border-radius: 50%; /* Hace el botón circular */
+            font-size: 24px; /* Tamaño del ícono */
+            transition: background-color 0.3s ease;
+        }
+
+        /* Efecto hover */
+        .back-button a:hover {
+            background-color: #333; /* Cambia el color al pasar el mouse */
+        }
+    </style>
+</head>
+<body>
+    <!-- Botón de volver -->
+    <div class="back-button">
+        <a href="javascript:history.back()">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+    </div>
 </body>
  <!-- Footer -->
  <footer>
