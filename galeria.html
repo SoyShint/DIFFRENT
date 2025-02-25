@@ -203,18 +203,91 @@
 </head>
 <body>
     <nav class="navbar" style="position: fixed; top: 0; left: 0; width: 100%; background-color: #000; color: white; z-index: 1000; padding: 10px 20px;">
-        <div class="nav-content" style="display: flex; justify-content: center; align-items: center;">
-            <div class="nav-links" style="display: flex; gap: 20px;">
-                <a href="index.html#home" style="color: white; text-decoration: none; font-size: 16px; font-weight: bold;">Inicio</a>
-                <a href="about.html" style="color: white; text-decoration: none; font-size: 16px; font-weight: bold;">Sobre mí</a>
-                <a href="videos.html" style="color: white; text-decoration: none; font-size: 16px; font-weight: bold;">Videos</a>
-                <a href="galeria.html" style="color: white; text-decoration: none; font-size: 16px; font-weight: bold;">Galería</a>
-                <a href="envivo.html" style="color: white; text-decoration: none; font-size: 16px; font-weight: bold;">En Vivo</a>
-                <a href="eventos.html" style="color: white; text-decoration: none; font-size: 16px; font-weight: bold;">Clan_200</a>
-                <a href="mafia.html" style="color: white; text-decoration: none; font-size: 16px; font-weight: bold;">Team Mafia</a>
+        <div class="nav-content">
+            <div class="mobile-menu-button">Inicio</div>
+            <div class="nav-links">
+                <a href="index.html#home">Inicio</a>
+                <a href="about.html">Sobre mí</a>
+                <a href="videos.html">Videos</a>
+                <a href="galeria.html">Galería</a>
+                <a href="envivo.html">En Vivo</a>
+                <a href="eventos.html">Clan_200</a>
+                <a href="mafia.html">Team Mafia</a>
             </div>
         </div>
     </nav>
+    
+    <style>
+    .nav-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .nav-links {
+        display: flex;
+        gap: 20px;
+    }
+    
+    .nav-links a {
+        color: white;
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    
+    .mobile-menu-button {
+        display: none;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    
+    @media screen and (max-width: 768px) {
+        .nav-links {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: #000;
+            padding: 10px 0;
+        }
+    
+        .nav-links.active {
+            display: flex;
+        }
+    
+        .nav-links a {
+            padding: 10px 20px;
+        }
+    
+        .mobile-menu-button {
+            display: block;
+        }
+    }
+    </style>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const mobileMenuButton = document.querySelector('.mobile-menu-button');
+        const navLinks = document.querySelector('.nav-links');
+    
+        mobileMenuButton.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+        });
+    
+        // Cerrar el menú al hacer clic en un enlace
+        const links = document.querySelectorAll('.nav-links a');
+        links.forEach(link => {
+            link.addEventListener('click', function() {
+                navLinks.classList.remove('active');
+            });
+        });
+    });
+    </script>
 
     <div class="gallery-container">
         <h1 class="gallery-title">Galería</h1>
