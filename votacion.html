@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Votación con Kick</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: #fff;
+            text-align: center;
+            padding: 2rem;
+        }
+        .btn {
+            background-color: #53FC18;
+            color: #000;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .btn:hover {
+            opacity: 0.9;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sistema de Votación</h1>
+    <div id="authSection">
+        <button class="btn" onclick="loginWithKick()">Iniciar Sesión con Kick</button>
+    </div>
+    <div id="votingSection" class="hidden">
+        <h2>Bienvenido, <span id="username"></span></h2>
+        <p>Elige tu candidato:</p>
+        <button class="btn" onclick="vote(1)">Candidato 1</button>
+        <button class="btn" onclick="vote(2)">Candidato 2</button>
+        <button class="btn" onclick="vote(3)">Candidato 3</button>
+    </div>
+    <div id="adminSection" class="hidden">
+        <h2>Panel de Administración</h2>
+        <button class="btn" onclick="viewResults()">Ver Resultados</button>
+        <button class="btn" onclick="resetVotes()">Reiniciar Votos</button>
+        <div id="results"></div>
+    </div>
+
+    <script>
+        const clientId = 'TU_CLIENT_ID';
+        const redirectUri = encodeURIComponent('http://localhost:3000/callback');
+        const scope = 'user:read';
+
+        function loginWithKick() {
+            const authUrl = `https://kick.com/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}`;
+            window.location.href = authUrl;
+        }
+
+        async function handleCallback() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const code = urlParams.get('code');
+
+            if (code) {
+                const response = await fetch('http://localhost:3000/auth', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ code }),
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const username = data.username;
+
+                    document.getElementById('authSection').classList.add('hidden');
+                    document.getElementById('votingSection').classList.remove('hidden');
+                    document.getElementById('username').textContent = username;
+
+                    if (username === 'Diffrent' || username === 'SoyShint') {
+                        document.getElementById('adminSection').classList.remove('hidden');
+                    }
+                } else {
+                    alert('Error al iniciar sesión');
+                }
+            }
+        }
+
+        async function vote(candidateId) {
+            const response = await fetch('http://localhost:3000/vote', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ candidateId }),
+            });
+
+            if (response.ok) {
+                alert('Voto registrado con éxito');
+            } else {
+                alert('Error al registrar el voto');
+            }
+        }
+
+        async function viewResults() {
+            const response = await fetch('http://localhost:3000/results');
+            if (response.ok) {
+                const results = await response.json();
+                document.getElementById('results').textContent = JSON.stringify(results);
+            } else {
+                alert('Error al obtener los resultados');
+            }
+        }
+
+        async function resetVotes() {
+            const response = await fetch('http://localhost:3000/reset', { method: 'POST' });
+            if (response.ok) {
+                alert('Votos reiniciados con éxito');
+            } else {
+                alert('Error al reiniciar los votos');
+            }
+        }
+
+        if (window.location.search.includes('code=')) {
+            handleCallback();
+        }
+    </script>
+</body>
+</html>
