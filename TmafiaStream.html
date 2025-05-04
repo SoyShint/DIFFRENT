@@ -386,7 +386,7 @@
         </a>
     </div>
 
-    <nav class="navbar" style="position: fixed; top: 0; left: 0; width: 100%; background-color: #000; color: white; z-index: 1000; padding: 10px 20px;">
+    <nav class="navbar">
         <div class="nav-content">
             <div class="mobile-menu-button">Inicio</div>
             <div class="nav-links">
@@ -481,10 +481,12 @@
             let platformTagClass = '';
 
             if (streamer.platform === 'twitch') {
-                embedUrl = `https://player.twitch.tv/?channel=${username}&parent=${rexed.xyz}&autoplay=true&muted=false`;
+                // *** URL de embed de Twitch usando location.hostname ***
+                embedUrl = `https://player.twitch.tv/?channel=${username}&parent=${location.hostname}&autoplay=true&muted=false`;
                 platformBorderClass = 'twitch-border';
                 platformTagClass = 'twitch-tag';
             } else if (streamer.platform === 'kick') {
+                // URL de embed de Kick que funciona
                 embedUrl = `https://player.kick.com/${username}`;
                 platformBorderClass = 'kick-border';
                 platformTagClass = 'kick-tag';
@@ -492,7 +494,6 @@
                 console.error('Plataforma desconocida para URL:', streamer.url);
                 return null;
             }
-
             card.classList.add(platformBorderClass);
 
             const streamPlayerContainer = document.createElement('div');
