@@ -13,6 +13,9 @@
             --bg-dark: #0a0a0a;
             --card-bg: #1a1a1a;
             --text-color: #ffffff;
+            --btn-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --config-btn-color: #00ff00; /* Color verde más luminoso */
+            --deactivate-btn-color: #ff0000; /* Color rojo para el botón de desactivar */
         }
 
         /* --- Estilos Generales del Body --- */
@@ -78,7 +81,7 @@
 
         .mobile-menu-button {
             display: none;
-            color: white;
+            color: rgb(0, 0, 0);
             font-size: 18px;
             font-weight: bold;
             cursor: pointer;
@@ -112,9 +115,10 @@
             gap: 10px;
             align-items: center;
             background-color: rgba(0, 0, 0, 0.8);
-            padding: 20px;
-            border-radius: 8px;
-            width: 300px;
+            padding: 10px;
+            border-radius: 12px;
+            width: 60px; /* Ancho reducido para la barra vertical */
+            box-shadow: var(--btn-shadow);
         }
 
         .global-controls label {
@@ -138,34 +142,41 @@
             border-radius: 50%;
             background: var(--kick-green);
             cursor: pointer;
+            box-shadow: var(--btn-shadow);
         }
 
         .control-btn {
-            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
             border: none;
-            border-radius: 8px;
             cursor: pointer;
-            font-weight: bold;
-            transition: opacity 0.3s ease;
             font-size: 1.2em;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: var(--btn-shadow);
+            background-color: var(--config-btn-color); /* Fondo verde más luminoso */
+            color: black; /* Icono negro */
         }
 
         .control-btn:hover {
-            opacity: 0.8;
+            transform: scale(1.1);
         }
 
         .global-controls .toggle-btn {
-            background: var(--twitch-purple);
+            background-color: var(--twitch-purple);
             color: white;
         }
 
         .global-controls .add-btn {
-            background: var(--kick-green);
+            background-color: var(--kick-green);
             color: black;
         }
 
         .global-controls #applySizeBtn {
-            background-color: #007bff;
+            background-color: #3cff00;
             color: white;
         }
 
@@ -240,12 +251,17 @@
         /* Estilos específicos para el botón de toggle dentro de cada tarjeta */
         .stream-footer .toggle-stream-btn {
             padding: 5px 10px;
-            background-color: #555;
+            background-color: var(--deactivate-btn-color); /* Color rojo */
             color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
         }
 
         .stream-footer .toggle-stream-btn:hover {
-            background-color: #777;
+            background-color: #cc0000; /* Color rojo más oscuro al pasar el ratón */
         }
 
         /* Estilo para cuando los reproductores están desactivados globalmente */
@@ -304,11 +320,13 @@
             text-decoration: none;
             border-radius: 50%;
             font-size: 20px;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: var(--btn-shadow);
         }
 
         .back-button a:hover {
             background-color: #333;
+            transform: scale(1.1);
         }
 
         /* --- Media Queries --- */
@@ -406,11 +424,22 @@
         <h1 class="live-title">Streams en Vivo</h1>
 
         <div class="global-controls">
-            <button id="toggleStreams" class="control-btn toggle-btn">Desactivar Reproductores</button>
-            <button id="addMafiaStreamButton" class="control-btn add-btn">Agregar del Team Mafia</button>
-            <label for="minWidthSlider">Ancho Mínimo (px):</label>
-            <input type="range" id="minWidthSlider" min="100" max="800" value="450">
-            <button id="applySizeBtn" class="control-btn">Aplicar Tamaño</button>
+            <button id="toggleConfigButtons" class="control-btn" title="Configuración">
+                <i class="fas fa-cog"></i>
+            </button>
+            <div id="configButtons" style="display: none;">
+                <button id="toggleStreams" class="control-btn toggle-btn" title="Desactivar Reproductores">
+                    <i class="fas fa-power-off"></i>
+                </button>
+                <button id="toggleSizeControls" class="control-btn" title="Ajustar Tamaño">
+                    <i class="fas fa-ruler-combined"></i>
+                </button>
+                <div id="sizeControls" style="display: none;">
+                    <label for="minWidthSlider">Ancho Mínimo (px):</label>
+                    <input type="range" id="minWidthSlider" min="100" max="800" value="450">
+                    <button id="applySizeBtn" class="control-btn">Aplicar</button> 
+                </div>
+            </div>
         </div>
 
         <div class="stream-grid" id="streamsContainer"></div>
@@ -427,9 +456,12 @@
     <script>
         const streamsContainer = document.getElementById('streamsContainer');
         const toggleStreamsButton = document.getElementById('toggleStreams');
-        const addMafiaStreamButton = document.getElementById('addMafiaStreamButton');
         const minWidthSlider = document.getElementById('minWidthSlider');
         const applySizeBtn = document.getElementById('applySizeBtn');
+        const toggleSizeControlsButton = document.getElementById('toggleSizeControls');
+        const sizeControls = document.getElementById('sizeControls');
+        const toggleConfigButtons = document.getElementById('toggleConfigButtons');
+        const configButtons = document.getElementById('configButtons');
         const TWITCH_PARENT_DOMAIN = 'localhost'; // Cambia esto por tu dominio
 
         const initialStreamers = [
@@ -437,13 +469,16 @@
             { url: "https://kick.com/spreen", platform: "kick" },
             { url: "https://kick.com/farfadox", platform: "kick" },
             { url: "https://kick.com/conterstine", platform: "kick" },
+            { url: "https://kick.com/sramilcar", platform: "kick" },
             { url: "https://kick.com/robleis", platform: "kick" },
             { url: "https://kick.com/bananirou", platform: "kick" },
             { url: "https://www.twitch.tv/pirutastic", platform: "twitch" },
             { url: "https://kick.com/shadoune666", platform: "kick" },
             { url: "https://kick.com/serpias", platform: "kick" },
             { url: "https://www.twitch.tv/silithur", platform: "twitch" },
-            { url: "https://www.twitch.tv/shadoune666", platform: "twitch" }
+            { url: "https://www.twitch.tv/shadoune666", platform: "twitch" },
+            { url: "https://www.twitch.tv/crisgreen", platform: "twitch" },
+            { url: "https://www.twitch.tv/esvandal", platform: "twitch" }
         ];
 
         const teamMafiaMembers = [
@@ -517,7 +552,6 @@
             platformTagSpan.textContent = `${streamer.platform.charAt(0).toUpperCase() + streamer.platform.slice(1)}: ${username}`;
 
             const toggleButton = document.createElement('button');
-            toggleButton.classList.add('control-btn');
             toggleButton.classList.add('toggle-stream-btn');
             toggleButton.textContent = 'Desactivar';
             embed.dataset.originalSrc = embedUrl;
@@ -548,30 +582,14 @@
             return card;
         }
 
-        function addNextMafiaStream() {
-            if (teamMafiaMembers.length === 0) {
-                alert('La lista de "Team Mafia" no está definida o está vacía.');
-                return;
-            }
-
-            if (currentMafiaIndex >= teamMafiaMembers.length) {
-                alert('Ya se han añadido todos los streamers de la lista "Team Mafia".');
-                return;
-            }
-
-            const streamer = teamMafiaMembers[currentMafiaIndex];
-            addStream(streamer);
-
-            currentMafiaIndex++;
-        }
-
         function toggleAllStreams() {
             const isCurrentlyActive = !document.body.classList.contains('disabled');
             const allToggleButtons = streamsContainer.querySelectorAll('.toggle-stream-btn');
 
             if (isCurrentlyActive) {
                 document.body.classList.add('disabled');
-                toggleStreamsButton.textContent = 'Activar Reproductores';
+                toggleStreamsButton.querySelector('i').classList.remove('fa-power-off');
+                toggleStreamsButton.querySelector('i').classList.add('fa-play');
                 allToggleButtons.forEach(button => {
                     const card = button.closest('.stream-card');
                     button.textContent = 'Activar';
@@ -580,7 +598,8 @@
 
             } else {
                 document.body.classList.remove('disabled');
-                toggleStreamsButton.textContent = 'Desactivar Reproductores';
+                toggleStreamsButton.querySelector('i').classList.remove('fa-play');
+                toggleStreamsButton.querySelector('i').classList.add('fa-power-off');
                 allToggleButtons.forEach(button => {
                     const card = button.closest('.stream-card');
                     const playerIframe = card.querySelector('.stream-embed');
@@ -608,6 +627,24 @@
             streamsContainer.style.gridTemplateColumns = `repeat(auto-fit, minmax(${minWidth}px, 1fr))`;
         }
 
+        function toggleSizeControls() {
+            if (sizeControls.style.display === 'none') {
+                sizeControls.style.display = 'block';
+            } else {
+                sizeControls.style.display = 'none';
+            }
+        }
+
+        function toggleConfigButtonsDisplay() {
+            if (configButtons.style.display === 'none') {
+                configButtons.style.display = 'flex';
+                configButtons.style.flexDirection = 'column';
+                configButtons.style.gap = '10px';
+            } else {
+                configButtons.style.display = 'none';
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             initialStreamers.forEach(streamer => {
                 addStream(streamer);
@@ -615,9 +652,10 @@
 
             applyStreamSize();
 
-            addMafiaStreamButton.addEventListener('click', addNextMafiaStream);
             toggleStreamsButton.addEventListener('click', toggleAllStreams);
             applySizeBtn.addEventListener('click', applyStreamSize);
+            toggleSizeControlsButton.addEventListener('click', toggleSizeControls);
+            toggleConfigButtons.addEventListener('click', toggleConfigButtonsDisplay);
 
             const mobileMenuButton = document.querySelector('.mobile-menu-button');
             const navLinks = document.querySelector('.nav-links');
@@ -635,11 +673,6 @@
                         }, 100);
                     });
                 });
-            }
-
-            if (teamMafiaMembers.length === 0) {
-                addMafiaStreamButton.disabled = true;
-                addMafiaStreamButton.textContent = 'Lista Mafia Vacía';
             }
         });
     </script>
