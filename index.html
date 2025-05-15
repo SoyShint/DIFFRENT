@@ -268,29 +268,30 @@
                 <a href="eventos.html">Clan_200</a>
                 <a href="mafia.html">Team Mafia</a>
                 <a href="TmafiaStream.html">Mafia Stream</a>
+                <a href="http://localhost:<PORT>/auth/kick" class="kick-login">Iniciar Sesión con Kick</a>
             </div>
         </div>
     </nav>
-    
+
     <style>
     .nav-content {
         display: flex;
         justify-content: center;
         align-items: center;
     }
-    
+
     .nav-links {
         display: flex;
         gap: 20px;
     }
-    
+
     .nav-links a {
         color: white;
         text-decoration: none;
         font-size: 16px;
         font-weight: bold;
     }
-    
+
     .mobile-menu-button {
         display: none;
         color: white;
@@ -298,7 +299,7 @@
         font-weight: bold;
         cursor: pointer;
     }
-    
+
     @media screen and (max-width: 768px) {
         .nav-links {
             display: none;
@@ -310,30 +311,30 @@
             background-color: #000;
             padding: 10px 0;
         }
-    
+
         .nav-links.active {
             display: flex;
         }
-    
+
         .nav-links a {
             padding: 10px 20px;
         }
-    
+
         .mobile-menu-button {
             display: block;
         }
     }
     </style>
-    
+
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         const mobileMenuButton = document.querySelector('.mobile-menu-button');
         const navLinks = document.querySelector('.nav-links');
-    
+
         mobileMenuButton.addEventListener('click', function() {
             navLinks.classList.toggle('active');
         });
-    
+
         // Cerrar el menú al hacer clic en un enlace
         const links = document.querySelectorAll('.nav-links a');
         links.forEach(link => {
@@ -342,13 +343,33 @@
             });
         });
     });
+
+    // Manejar la respuesta de autorización
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
+
+    if (code) {
+        // Enviar el código al backend para intercambiarlo por un token de acceso
+        fetch('http://localhost:0/auth/kick/callback', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ code }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Manejar la respuesta del backend
+            console.log('Token de acceso:', data.access_token);
+        });
+    }
     </script>
     <section id="home" class="hero">
         <div class="hero-content">
             <img src="images/diff.png" alt="Diffrent" class="profile-img">
             <h1 class="title">Diffrent</h1>
             <p class="subtitle">Lider del clan_200 | Team mafia</p>
-            
+
             <div class="social-links">
                 <a href="https://kick.com/diffrent" target="_blank" class="kick">
                     <i class="fas fa-play"></i> Kick
@@ -368,14 +389,14 @@
                 <a href="https://www.tiktok.com/@dlffrent_" target="_blank" class="tiktok">
                     <i class="fab fa-tiktok"></i> TikTok
                 </a>
-                <a href="https://discord.gg/jF2X77Sm9v" target="_blank" class="discord">
+                <a href="https://discord.gg/jzz6DJCKzj" target="_blank" class="discord">
                     <i class="fab fa-discord"></i> Discord
                 </a>
                 <a href="https://www.youtube.com/@Diffrent_200/videos" target="_blank" class="youtube">
                     <i class="fab fa-youtube"></i> YouTube
                 </a>
             </div>
-        </div> 
+        </div>
         </section>
         <style>
             /* Estilo del contenedor del botón */
@@ -385,7 +406,7 @@
                 left: 20px; /* Distancia desde la izquierda */
                 z-index: 1000; /* Asegura que esté por encima de otros elementos */
             }
-    
+
             /* Estilo del enlace */
             .back-button a {
                 display: flex;
@@ -400,7 +421,7 @@
                 font-size: 24px; /* Tamaño del ícono */
                 transition: background-color 0.3s ease;
             }
-    
+
             /* Efecto hover */
             .back-button a:hover {
                 background-color: #333; /* Cambia el color al pasar el mouse */
