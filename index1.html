@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sobre Diffrent</title>
-     <link rel="stylesheet" href="style.css">
-     <body id="about">
+    <title>Diffrent - Streamer Uruguayo</title>
+    <!-- Iconos -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Referencia al archivo de estilos -->
+    <link rel="stylesheet" href="style.css">
+    <body id="index">
 </head>
 <body>
     <nav class="navbar" style="position: fixed; top: 0; left: 0; width: 100%; background-color: #000; color: white; z-index: 1000; padding: 10px 20px;">
@@ -95,116 +100,47 @@
         });
     });
     </script>
-    
-    <style>
-    .nav-content {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    
-    .nav-links {
-        display: flex;
-        gap: 20px;
-    }
-    
-    .nav-links a {
-        color: white;
-        text-decoration: none;
-        font-size: 16px;
-        font-weight: bold;
-    }
-    
-    .mobile-menu-button {
-        display: none;
-        color: white;
-        font-size: 16px;
-        font-weight: bold;
-        cursor: pointer;
-    }
-    
-    @media screen and (max-width: 768px) {
-        .nav-links {
-            display: none;
-            flex-direction: column;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 100%;
-            background-color: #000;
-            padding: 10px 0;
-        }
-    
-        .nav-links.active {
-            display: flex;
-        }
-    
-        .nav-links a {
-            padding: 10px 20px;
-        }
-    
-        .mobile-menu-button {
-            display: block;
-        }
-    }
-    </style>
-    
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const mobileMenuButton = document.querySelector('.mobile-menu-button');
-        const navLinks = document.querySelector('.nav-links');
-    
-        mobileMenuButton.addEventListener('click', function() {
-            navLinks.classList.toggle('active');
-        });
-    
-        // Cerrar el menú al hacer clic en un enlace
-        const links = document.querySelectorAll('.nav-links a');
-        links.forEach(link => {
-            link.addEventListener('click', function() {
-                navLinks.classList.remove('active');
-            });
-        });
-    });
-    </script>
-
-    <!-- Sección Sobre Diffrent -->
-    <section id="about" class="section">
-        <h2 class="section-title">Sobre Diffrent</h2>
-        <div class="about-container">
-            <!-- Imagen de Diffrent -->
-            <div class="about-image">
-                <img src="images/diffrent.png" alt="Diffrent">
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <img src="images/diff.png" alt="Diffrent" class="profile-img">
+            <h1 class="title">Diffrent</h1>
+            <p class="subtitle">Lider del clan_200 | Team mafia</p>
+            
+            <div class="social-links">
+                <a href="https://kick.com/diffrent" target="_blank" class="kick">
+                    <i class="fas fa-play"></i> Kick
+                </a>
+                <a href="https://twitch.tv/diffrent" target="_blank" class="twitch">
+                    <i class="fab fa-twitch"></i> Twitch
+                </a>
+                <a href="https://www.instagram.com/diffrent.200/" target="_blank" class="instagram">
+                    <i class="fab fa-instagram"></i> Instagram
+                </a>
+                <a href="https://x.com/diffrent_200" target="_blank" class="twitter">
+                    <i class="fab fa-twitter"></i> X (Twitter)
+                </a>
+                <a href="mailto:contacto.dlffrent@gmail.com" target="_blank" class="email">
+                    <i class="fas fa-envelope"></i> Correo
+                </a>
+                <a href="https://www.tiktok.com/@dlffrent_" target="_blank" class="tiktok">
+                    <i class="fab fa-tiktok"></i> TikTok
+                </a>
+                <a href="https://discord.gg/jzz6DJCKzj" target="_blank" class="discord">
+                    <i class="fab fa-discord"></i> Discord
+                </a>
+                <a href="https://www.youtube.com/@Diffrent_200/videos" target="_blank" class="youtube">
+                    <i class="fab fa-youtube"></i> YouTube
+                </a>
             </div>
-            <!-- Texto descriptivo -->
-            <div class="about-text">
-                <p>
-                    <strong>Diffrent</strong>, también conocido como el jugador 200, es un streamer y creador de contenido 
-                    <strong>uruguayo</strong> que ha ganado notoriedad en el ámbito del entretenimiento digital. Se destacó por su 
-                    participación en <strong>Squid Craft Games 2</strong>, un evento de Minecraft inspirado en la serie 
-                    <em>El juego del calamar</em>, organizado por <strong>AuronPlay, Rubius y Komanche</strong>. A pesar de ser un streamer 
-                    relativamente pequeño en comparación con otros participantes, su selección como el jugador número 200 marcó un punto 
-                    de inflexión en su carrera.
-                </p>
-                <p>
-                    Diffrent es conocido por su humildad y cercanía con su comunidad, a la que llama <em>"El clan de los 200"</em> o 
-                    simplemente <em>"200"</em>, en referencia a su número de participante en Squid Craft Games 2. Su enfoque en la interacción 
-                    con sus seguidores es distintivo, ya que fomenta un ambiente de confianza y camaradería, donde los miembros pueden 
-                    interactuar con él y entre ellos con apodos y bromas, siempre dentro de los límites del respeto.
-                </p>
-            </div>
+            <!-- Botón de login con Discord -->
+           <div class="discord-login-container">
+      <a href="https://discord.com/api/oauth2/authorize?client_id=1374873687487942796&redirect_uri=https%3A%2F%2Fdiffrent.netlify.app%2Fcallback&response_type=code&scope=identify" class="discord-login-btn">
+    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="Discord" width="20">
+    Iniciar sesión con Discord
+    </a>
         </div>
-    </section>
-    <!DOCTYPE html>
-    <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Botón Volver</title>
-        
-        <!-- Enlace a Font Awesome -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-        
+        </div> 
+        </section>
         <style>
             /* Estilo del contenedor del botón */
             .back-button {
@@ -242,7 +178,5 @@
                 <i class="fas fa-arrow-left"></i>
             </a>
         </div>
-    </body>
-    </html>
 </body>
 </html>

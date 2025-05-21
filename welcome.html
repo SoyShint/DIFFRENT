@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Bienvenido</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #111;
+      color: white;
+      text-align: center;
+      padding-top: 100px;
+    }
+    .username {
+      color: #57F287;
+      font-size: 24px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>¡Hola <span class="username" id="username">usuario</span>!</h1>
+  <p>Gracias por iniciar sesión con Discord.</p>
+
+  <script>
+    const query = window.location.search;
+    const match = query.match(/username=([^#]+)#(.+)/);
+    if (match) {
+      const [_, user, discrim] = match;
+      document.getElementById("username").innerText = `${user}#${discrim}`;
+    }
+  </script>
+</body>
+</html>

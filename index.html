@@ -5,257 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Diffrent - Streamer Uruguayo</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
     <style>
-        :root {
-            --primary-color: #00ff00;
-            --secondary-color: #9146FF;
-            --text-color: #ffffff;
-            --bg-color: #000000;
-            --card-bg: #111111;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            transition: all 0.3s ease;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--bg-color);
-            overflow-x: hidden;
-        }
-
-        .particles {
+        .discord-login-top {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-            background: radial-gradient(circle at center, #111111 0%, #000000 100%);
+            top: 10px;
+            right: 20px;
+            z-index: 1100;
         }
 
-        .navbar {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            padding: 2rem;
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-        }
-
-        .nav-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            color: var(--text-color);
-            text-decoration: none;
-            font-weight: 1000;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--primary-color);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .hero {
-            padding-top: 100px;
-            min-height: 100vh;
+        .discord-login-top .discord-login-btn {
             display: flex;
             align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, rgba(0, 0, 0, 0.1) 0%, rgba(0,0,0,0.9) 100%);
-            z-index: -1;
-        }
-
-        .hero-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-            text-align: center;
-            position: relative;
-        }
-
-        .profile-img {
-            width: 250px;
-            height: 250px;
-            border-radius: 50%;
-            margin-bottom: 2rem;
-            border: 4px solid var(--primary-color);
-            box-shadow: 0 0 30px rgba(0,255,0,0.3);
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .title {
-            font-size: 4rem;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            text-shadow: 0 0 10px rgba(0,255,0,0.5);
-            font-weight: 800;
-        }
-
-        .subtitle {
-            font-size: 1.8rem;
-            color: var(--text-color);
-            margin-bottom: 2rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-top: 3rem;
-            flex-wrap: wrap;
-        }
-
-        .social-links a {
-            color: var(--text-color);
-            font-size: 1.2rem;
+            padding: 8px 12px;
+            background-color: #5865F2;
+            color: white;
+            font-weight: bold;
             text-decoration: none;
-            padding: 15px 30px;
-            border-radius: 30px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 600;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
         }
 
-        .social-links a:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        .discord-login-top .discord-login-btn img {
+            margin-right: 8px;
         }
 
-        .social-links .kick { background: linear-gradient(45deg, #40ff40, #00cc00); }
-        .social-links .twitch { background: linear-gradient(45deg, #9146FF, #6441A5); }
-        .social-links .instagram { background: linear-gradient(45deg, #E1306C, #C13584); }
-        .social-links .twitter { background: linear-gradient(45deg, #1DA1F2, #0d8ecf); }
-        .social-links .email { background: linear-gradient(45deg, #FF5722, #FF7043); }
-        .social-links .tiktok { background: linear-gradient(45deg, #000000, #333333); }
-        .social-links .discord { background: linear-gradient(45deg, #5865F2, #4752C4); }
-        .social-links .youtube { background: linear-gradient(45deg, #FF0000, #CC0000); }
-
-        .section {
-            padding: 6rem 2rem;
-            position: relative;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 3rem;
-            color: var(--primary-color);
-            margin-bottom: 3rem;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-        }
-
-        .about-text {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto;
-            font-size: 1.2rem;
-            line-height: 1.8;
-            color: var(--text-color);
-        }
-
-        .clips-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            padding: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .clip {
-            background: var(--card-bg);
-            border-radius: 15px;
-            overflow: hidden;
-            transition: transform 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-
-        .clip:hover {
-            transform: translateY(-10px);
-        }
-
-        .clip iframe {
-            width: 100%;
-            height: 200px;
-            border: none;
+        .discord-login-top .discord-login-btn:hover {
+            background-color: #4752c4;
         }
 
         @media (max-width: 768px) {
-            .title {
-                font-size: 2.5rem;
-            }
-
-            .subtitle {
-                font-size: 1.2rem;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .social-links {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .social-links a {
-                width: 80%;
+            .discord-login-top .discord-login-btn {
+                font-size: 12px;
+                padding: 6px 10px;
             }
         }
     </style>
 </head>
-<body>
+<body id="index">
+
+    <!-- Botón Discord arriba a la derecha -->
+    <div class="discord-login-top">
+        <a href="/.netlify/functions/discord-auth" class="discord-login-btn">
+            <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="Discord" width="20">
+            Iniciar sesión
+        </a>
+    </div>
+
     <nav class="navbar" style="position: fixed; top: 0; left: 0; width: 100%; background-color: #000; color: white; z-index: 1000; padding: 10px 20px;">
         <div class="nav-content">
             <div class="mobile-menu-button">Inicio</div>
@@ -265,175 +62,29 @@
                 <a href="videos.html">Videos</a>
                 <a href="galeria.html">Galería</a>
                 <a href="envivo.html">En Vivo</a>
-                <a href="eventos.html">Clan_200</a>
+                <a href="top.html">Comunidad</a>
                 <a href="mafia.html">Team Mafia</a>
                 <a href="TmafiaStream.html">Mafia Stream</a>
-                <a href="http://localhost:<PORT>/auth/kick" class="kick-login">Iniciar Sesión con Kick</a>
             </div>
         </div>
     </nav>
 
-    <style>
-    .nav-content {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .nav-links {
-        display: flex;
-        gap: 20px;
-    }
-
-    .nav-links a {
-        color: white;
-        text-decoration: none;
-        font-size: 16px;
-        font-weight: bold;
-    }
-
-    .mobile-menu-button {
-        display: none;
-        color: white;
-        font-size: 16px;
-        font-weight: bold;
-        cursor: pointer;
-    }
-
-    @media screen and (max-width: 768px) {
-        .nav-links {
-            display: none;
-            flex-direction: column;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 100%;
-            background-color: #000;
-            padding: 10px 0;
-        }
-
-        .nav-links.active {
-            display: flex;
-        }
-
-        .nav-links a {
-            padding: 10px 20px;
-        }
-
-        .mobile-menu-button {
-            display: block;
-        }
-    }
-    </style>
-
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const mobileMenuButton = document.querySelector('.mobile-menu-button');
-        const navLinks = document.querySelector('.nav-links');
-
-        mobileMenuButton.addEventListener('click', function() {
-            navLinks.classList.toggle('active');
-        });
-
-        // Cerrar el menú al hacer clic en un enlace
-        const links = document.querySelectorAll('.nav-links a');
-        links.forEach(link => {
-            link.addEventListener('click', function() {
-                navLinks.classList.remove('active');
-            });
-        });
-    });
-
-    // Manejar la respuesta de autorización
-    const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get('code');
-
-    if (code) {
-        // Enviar el código al backend para intercambiarlo por un token de acceso
-        fetch('http://localhost:0/auth/kick/callback', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ code }),
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Manejar la respuesta del backend
-            console.log('Token de acceso:', data.access_token);
-        });
-    }
-    </script>
     <section id="home" class="hero">
         <div class="hero-content">
             <img src="images/diff.png" alt="Diffrent" class="profile-img">
             <h1 class="title">Diffrent</h1>
             <p class="subtitle">Lider del clan_200 | Team mafia</p>
-
             <div class="social-links">
-                <a href="https://kick.com/diffrent" target="_blank" class="kick">
-                    <i class="fas fa-play"></i> Kick
-                </a>
-                <a href="https://twitch.tv/diffrent" target="_blank" class="twitch">
-                    <i class="fab fa-twitch"></i> Twitch
-                </a>
-                <a href="https://www.instagram.com/diffrent.200/" target="_blank" class="instagram">
-                    <i class="fab fa-instagram"></i> Instagram
-                </a>
-                <a href="https://x.com/diffrent_200" target="_blank" class="twitter">
-                    <i class="fab fa-twitter"></i> X (Twitter)
-                </a>
-                <a href="mailto:contacto.dlffrent@gmail.com" target="_blank" class="email">
-                    <i class="fas fa-envelope"></i> Correo
-                </a>
-                <a href="https://www.tiktok.com/@dlffrent_" target="_blank" class="tiktok">
-                    <i class="fab fa-tiktok"></i> TikTok
-                </a>
-                <a href="https://discord.gg/jzz6DJCKzj" target="_blank" class="discord">
-                    <i class="fab fa-discord"></i> Discord
-                </a>
-                <a href="https://www.youtube.com/@Diffrent_200/videos" target="_blank" class="youtube">
-                    <i class="fab fa-youtube"></i> YouTube
-                </a>
+                <a href="https://kick.com/diffrent" target="_blank" class="kick"><i class="fas fa-play"></i> Kick</a>
+                <a href="https://twitch.tv/diffrent" target="_blank" class="twitch"><i class="fab fa-twitch"></i> Twitch</a>
+                <a href="https://www.instagram.com/diffrent.200/" target="_blank" class="instagram"><i class="fab fa-instagram"></i> Instagram</a>
+                <a href="https://x.com/diffrent_200" target="_blank" class="twitter"><i class="fab fa-twitter"></i> X (Twitter)</a>
+                <a href="mailto:contacto.dlffrent@gmail.com" target="_blank" class="email"><i class="fas fa-envelope"></i> Correo</a>
+                <a href="https://www.tiktok.com/@dlffrent_" target="_blank" class="tiktok"><i class="fab fa-tiktok"></i> TikTok</a>
+                <a href="https://discord.gg/jzz6DJCKzj" target="_blank" class="discord"><i class="fab fa-discord"></i> Discord</a>
+                <a href="https://www.youtube.com/@Diffrent_200/videos" target="_blank" class="youtube"><i class="fab fa-youtube"></i> YouTube</a>
             </div>
         </div>
-        </section>
-        <style>
-            /* Estilo del contenedor del botón */
-            .back-button {
-                position: fixed;
-                top: 20px; /* Distancia desde la parte superior */
-                left: 20px; /* Distancia desde la izquierda */
-                z-index: 1000; /* Asegura que esté por encima de otros elementos */
-            }
-
-            /* Estilo del enlace */
-            .back-button a {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                width: 50px; /* Tamaño del botón */
-                height: 50px;
-                background-color: #000; /* Color de fondo */
-                color: white; /* Color del ícono */
-                text-decoration: none;
-                border-radius: 50%; /* Hace el botón circular */
-                font-size: 24px; /* Tamaño del ícono */
-                transition: background-color 0.3s ease;
-            }
-
-            /* Efecto hover */
-            .back-button a:hover {
-                background-color: #333; /* Cambia el color al pasar el mouse */
-            }
-        </style>
-    </head>
-    <body>
-        <!-- Botón de volver -->
-        <div class="back-button">
-            <a href="javascript:history.back()">
-                <i class="fas fa-arrow-left"></i>
-            </a>
-        </div>
+    </section>
 </body>
 </html>

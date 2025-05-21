@@ -3,62 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Multistream Team Mafia</title>
+    <title>Galería - Diffrent</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* --- Variables de Color --- */
         :root {
-            --kick-green: #00ff00;
-            --twitch-purple: #9146FF;
-            --bg-dark: #0a0a0a;
-            --card-bg: #1a1a1a;
+            --primary-color: #00ff00;
+            --secondary-color: #9146FF;
             --text-color: #ffffff;
+            --bg-color: #000000;
+            --card-bg: #111111;
+            --card-shadow: rgba(0, 0, 0, 0.5);
         }
 
-        /* --- Estilos Generales del Body --- */
-        body {
-            font-family: 'Arial', sans-serif;
-            background: var(--bg-dark);
-            color: var(--text-color);
+        * {
             margin: 0;
-            padding: 100px 20px 20px 20px;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        /* --- Estilos de Navbar --- */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
         .navbar {
             position: fixed;
             top: 0;
             width: 100%;
             background-color: rgba(0, 0, 0, 0.8);
-            padding: 20px 20px;
+            padding: 1rem 2rem;
             backdrop-filter: blur(10px);
             z-index: 1000;
             display: flex;
             justify-content: center;
-            align-items: center;
-        }
-
-        .nav-content {
-            max-width: 1200px;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
 
         .nav-links {
             display: flex;
-            gap: 20px;
+            gap: 2rem;
         }
 
         .nav-links a {
             color: var(--text-color);
             text-decoration: none;
             font-weight: bold;
-            font-size: 18px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
             position: relative;
+            font-size: 1rem;
         }
 
         .nav-links a::after {
@@ -68,7 +62,7 @@
             left: 0;
             width: 0;
             height: 2px;
-            background-color: var(--kick-green);
+            background-color: var(--primary-color);
             transition: width 0.3s ease;
         }
 
@@ -76,329 +70,68 @@
             width: 100%;
         }
 
-        .mobile-menu-button {
-            display: none;
-            color: white;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            position: absolute;
-            left: 20px;
-        }
-
-        /* --- Layout Principal del Contenido --- */
-        .live-container {
-            max-width: 1600px;
+        .gallery-container {
+            padding-top: 100px;
+            max-width: 1200px;
             margin: 0 auto;
+            padding-bottom: 50px;
+            text-align: center;
         }
 
-        .live-title {
-            text-align: center;
+        .gallery-title {
             font-size: 3rem;
-            color: var(--kick-green);
+            color: var(--primary-color);
             margin-bottom: 2rem;
             text-transform: uppercase;
             letter-spacing: 4px;
         }
 
-        /* --- Controles Globales --- */
-        .global-controls {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            align-items: center;
-            background-color: rgba(0, 0, 0, 0.8);
-            padding: 20px;
-            border-radius: 8px;
-            width: 300px;
-        }
-
-        .global-controls label {
-            color: var(--text-color);
-            font-size: 1em;
-        }
-
-        .global-controls input[type="range"] {
-            width: 100%;
-            -webkit-appearance: none;
-            background: #3a3a3a;
-            height: 5px;
-            border-radius: 5px;
-        }
-
-        .global-controls input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: var(--kick-green);
-            cursor: pointer;
-        }
-
-        .control-btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: opacity 0.3s ease;
-            font-size: 1.2em;
-        }
-
-        .control-btn:hover {
-            opacity: 0.8;
-        }
-
-        .global-controls .toggle-btn {
-            background: var(--twitch-purple);
-            color: white;
-        }
-
-        .global-controls .add-btn {
-            background: var(--kick-green);
-            color: black;
-        }
-
-        .global-controls #applySizeBtn {
-            background-color: #007bff;
-            color: white;
-        }
-
-        /* --- Grid de Streamers --- */
-        .stream-grid {
+        .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            padding: 0;
+            gap: 2rem;
+            padding: 0 2rem;
         }
 
-        /* --- Tarjeta de Stream Individual --- */
-        .stream-card {
-            position: relative;
-            border: 2px solid var(--kick-green);
-            border-radius: 10px;
+        .gallery-item {
+            background-color: var(--card-bg);
+            border-radius: 15px;
             overflow: hidden;
-            background: var(--card-bg);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 15px var(--card-shadow);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            cursor: move; /* Indica que el elemento es movible */
         }
 
-        .stream-card:hover {
-            transform: scale(1.02);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px var(--card-shadow);
         }
 
-        .stream-card.dragging {
-            opacity: 0.5; /* Estilo para el elemento siendo arrastrado */
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        .stream-card.drag-over {
-            border: 2px dashed var(--kick-green); /* Estilo para el área de destino */
-        }
-
-        .kick-border { border-color: var(--kick-green); }
-        .twitch-border { border-color: var(--twitch-purple); }
-
-        /* Contenedor del Iframe con proporción 16:9 */
-        .stream-embed-container {
-            position: relative;
+        .gallery-item iframe {
             width: 100%;
-            padding-top: 56.25%;
-            flex-grow: 1;
-            min-height: 150px;
-        }
-
-        .stream-card .stream-embed {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            height: 200px;
             border: none;
-            display: block;
         }
 
-        /* Controles dentro de la tarjeta de stream (Footer) */
-        .stream-footer {
-            padding: 15px;
-            background: rgba(0, 0, 0, 0.7);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            min-height: 40px;
-        }
-
-        /* Estilo para el nombre del canal/plataforma */
-        .platform-tag {
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 1em;
-        }
-
-        .kick-tag { color: var(--kick-green); }
-        .twitch-tag { color: var(--twitch-purple); }
-
-        /* Estilos específicos para el botón de toggle dentro de cada tarjeta */
-        .stream-footer .toggle-stream-btn {
-            padding: 5px 10px;
-            background-color: #555;
-            color: white;
-            border-radius: 4px;
-        }
-
-        .stream-footer .toggle-stream-btn:hover {
-            background-color: #777;
-        }
-
-        /* Estilo para cuando los reproductores están desactivados globalmente */
-        body.disabled .stream-embed {
-            content: '';
-            display: none;
-        }
-
-        body.disabled .disabled-message {
-            color: #ff0000;
-            text-align: center;
-            padding: 20px;
-            display: block;
-            font-size: 1.2em;
-        }
-
-        .disabled-message {
-            display: none;
-        }
-
-        /* --- Footer --- */
         footer {
             text-align: center;
             padding: 20px;
-            margin-top: 40px;
-            background-color: #1a1a1a;
-            color: #888;
-            font-size: 0.9em;
+            background-color: rgba(0, 0, 0, 0.9);
+            color: var(--text-color);
+            font-size: 0.9rem;
         }
 
         footer a {
-            color: #888;
+            color: var(--primary-color);
             text-decoration: none;
         }
 
         footer a:hover {
             text-decoration: underline;
         }
-
-        /* --- Botón de Volver --- */
-        .back-button {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 1000;
-        }
-
-        .back-button a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background-color: #000;
-            color: white;
-            text-decoration: none;
-            border-radius: 50%;
-            font-size: 20px;
-            transition: background-color 0.3s ease;
-        }
-
-        .back-button a:hover {
-            background-color: #333;
-        }
-
-        /* --- Media Queries --- */
-        @media screen and (max-width: 1600px) {
-            /* La cuadrícula se ajustará automáticamente */
-        }
-
-        @media screen and (max-width: 768px) {
-            .nav-links {
-                flex-direction: column;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background-color: #000;
-                padding: 10px 0;
-                z-index: 999;
-                display: none;
-            }
-
-            .nav-links.active {
-                display: flex;
-            }
-
-            .mobile-menu-button {
-                display: block;
-            }
-
-            .live-title {
-                font-size: 2rem;
-            }
-
-            .stream-grid {
-                grid-template-columns: 1fr;
-                gap: 15px;
-            }
-
-            .stream-embed-container {
-                min-height: 180px;
-            }
-
-            .global-controls {
-                position: static;
-                margin-top: 20px;
-                justify-content: center;
-                padding: 15px;
-                border-radius: 8px;
-                background-color: #2a2a2a;
-                flex-direction: column;
-            }
-
-            .global-controls input[type="number"],
-            .global-controls button,
-            .global-controls label {
-                width: 100%;
-                text-align: center;
-            }
-
-            .global-controls button {
-                padding: 10px;
-            }
-        }
-
-        @media screen and (max-width: 480px) {
-            .live-title {
-                font-size: 1.5rem;
-            }
-        }
     </style>
 </head>
 <body>
-    <div class="back-button">
-        <a href="javascript:history.back()">
-            <i class="fas fa-arrow-left"></i>
-        </a>
-    </div>
-
-    <nav class="navbar">
+    <nav class="navbar" style="position: fixed; top: 0; left: 0; width: 100%; background-color: #000; color: white; z-index: 1000; padding: 10px 20px;">
         <div class="nav-content">
             <div class="mobile-menu-button">Inicio</div>
             <div class="nav-links">
@@ -407,297 +140,162 @@
                 <a href="videos.html">Videos</a>
                 <a href="galeria.html">Galería</a>
                 <a href="envivo.html">En Vivo</a>
-                <a href="eventos.html">Clan_200</a>
+                <a href="top.html">Comunidad</a>
                 <a href="mafia.html">Team Mafia</a>
                 <a href="TmafiaStream.html">Mafia Stream</a>
             </div>
         </div>
     </nav>
+    
+    <style>
+    .nav-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .nav-links {
+        display: flex;
+        gap: 20px;
+    }
+    
+    .nav-links a {
+        color: white;
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    
+    .mobile-menu-button {
+        display: none;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    
+    @media screen and (max-width: 768px) {
+        .nav-links {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: #000;
+            padding: 10px 0;
+        }
+    
+        .nav-links.active {
+            display: flex;
+        }
+    
+        .nav-links a {
+            padding: 10px 20px;
+        }
+    
+        .mobile-menu-button {
+            display: block;
+        }
+    }
+    </style>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const mobileMenuButton = document.querySelector('.mobile-menu-button');
+        const navLinks = document.querySelector('.nav-links');
+    
+        mobileMenuButton.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+        });
+    
+        // Cerrar el menú al hacer clic en un enlace
+        const links = document.querySelectorAll('.nav-links a');
+        links.forEach(link => {
+            link.addEventListener('click', function() {
+                navLinks.classList.remove('active');
+            });
+        });
+    });
+    </script>
 
-    <div class="live-container">
-        <h1 class="live-title">Streams en Vivo</h1>
+    <div class="gallery-container">
+        <h1 class="gallery-title">Galería de Videos</h1>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <iframe src="https://www.youtube.com/embed/QxJG7ECu9rI" allowfullscreen></iframe>
+            </div>
+            <div class="gallery-item">
+                <iframe src="https://www.youtube.com/embed/fhhoITzeoZA" allowfullscreen></iframe>
+            </div>
+            <div class="gallery-item">
+                <iframe src="https://www.youtube.com/embed/zKQlJVTc0Rc" allowfullscreen></iframe>
+            </div>
+            <div class="gallery-item">
+                <iframe src="https://www.youtube.com/embed/gNV5QjdtUXs" allowfullscreen></iframe>
+            </div>
+            <div class="gallery-item">
+                <iframe src="https://www.youtube.com/embed/9HRtEMtsYgE" allowfullscreen></iframe>
+            </div>
+            <div class="gallery-item">
+                <iframe src="https://www.youtube.com/embed/629YRgcu8Eo" allowfullscreen></iframe>
+            </div>
+            <div class="gallery-item">
+                <iframe src="https://www.youtube.com/embed/UzqsoA6L-q0" allowfullscreen></iframe>
+            </div>
+            <div class="gallery-item">
+                <iframe src="https://www.youtube.com/embed/EfhAph33Mn8" allowfullscreen></iframe>
+            </div>
+            <div class="gallery-item">
+                <iframe src="https://www.youtube.com/embed/xLLIJKm2850" allowfullscreen></iframe>
+            </div>
+            <div class="gallery-item">
+                <iframe src="https://www.youtube.com/embed/O5ltU7iEAR8" allowfullscreen></iframe>
+            </div>
+            <!DOCTYPE html>
+    <style>
+        /* Estilo del contenedor del botón */
+        .back-button {
+            position: fixed;
+            top: 20px; /* Distancia desde la parte superior */
+            left: 20px; /* Distancia desde la izquierda */
+            z-index: 1000; /* Asegura que esté por encima de otros elementos */
+        }
 
-        <div class="global-controls">
-            <button id="toggleStreams" class="control-btn toggle-btn">Desactivar Reproductores</button>
-            <button id="addMafiaStreamButton" class="control-btn add-btn">Agregar del Team Mafia</button>
-            <label for="minWidthSlider">Ancho Mínimo (px):</label>
-            <input type="range" id="minWidthSlider" min="100" max="800" value="450">
-            <button id="applySizeBtn" class="control-btn">Aplicar Tamaño</button>
-        </div>
+        /* Estilo del enlace */
+        .back-button a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px; /* Tamaño del botón */
+            height: 50px;
+            background-color: #000; /* Color de fondo */
+            color: white; /* Color del ícono */
+            text-decoration: none;
+            border-radius: 50%; /* Hace el botón circular */
+            font-size: 24px; /* Tamaño del ícono */
+            transition: background-color 0.3s ease;
+        }
 
-        <div class="stream-grid" id="streamsContainer"></div>
-
-        <div class="disabled-message">
-            Los reproductores están desactivados
-        </div>
+        /* Efecto hover */
+        .back-button a:hover {
+            background-color: #333; /* Cambia el color al pasar el mouse */
+        }
+    </style>
+</head>
+<body>
+    <!-- Botón de volver -->
+    <div class="back-button">
+        <a href="javascript:history.back()">
+            <i class="fas fa-arrow-left"></i>
+        </a>
     </div>
-
+</body>
+</html>
+    </div>
+    <!-- Footer -->
     <footer>
         <p>© 2025 Diffrent. hecho con ❤️ por <a href="#">SoyShint</a>.</p>
     </footer>
-
-    <script>
-        const streamsContainer = document.getElementById('streamsContainer');
-        const toggleStreamsButton = document.getElementById('toggleStreams');
-        const addMafiaStreamButton = document.getElementById('addMafiaStreamButton');
-        const minWidthSlider = document.getElementById('minWidthSlider');
-        const applySizeBtn = document.getElementById('applySizeBtn');
-        const TWITCH_PARENT_DOMAIN = 'localhost'; // Cambia esto por tu dominio
-
-        const initialStreamers = [
-            { url: "https://kick.com/diffrent", platform: "kick" },
-            { url: "https://kick.com/spreen", platform: "kick" },
-            { url: "https://kick.com/farfadox", platform: "kick" },
-            { url: "https://kick.com/conterstine", platform: "kick" },
-            { url: "https://kick.com/robleis", platform: "kick" },
-            { url: "https://kick.com/bananirou", platform: "kick" },
-            { url: "https://www.twitch.tv/pirutastic", platform: "twitch" },
-            { url: "https://kick.com/shadoune666", platform: "kick" },
-            { url: "https://kick.com/serpias", platform: "kick" },
-            { url: "https://www.twitch.tv/silithur", platform: "twitch" },
-            { url: "https://www.twitch.tv/shadoune666", platform: "twitch" }
-        ];
-
-        const teamMafiaMembers = [
-            // Define aquí los streamers adicionales para el botón "Agregar otro del Team Mafia"
-        ];
-
-        let currentMafiaIndex = 0;
-        let draggedItem = null;
-
-        function getUsernameFromUrl(url) {
-            try {
-                const urlObj = new URL(url);
-                const pathSegments = urlObj.pathname.split('/').filter(segment => segment !== '');
-                return pathSegments.pop();
-            } catch (e) {
-                console.error("URL inválida:", url, e);
-                return null;
-            }
-        }
-
-        function createStreamCard(streamer) {
-            const username = getUsernameFromUrl(streamer.url);
-            if (!username) {
-                console.error("No se pudo obtener el nombre de usuario de la URL:", streamer.url);
-                return null;
-            }
-
-            const card = document.createElement('div');
-            card.classList.add('stream-card');
-            card.dataset.channel = username;
-            card.dataset.platform = streamer.platform;
-            card.dataset.isActive = 'true';
-            card.draggable = true; // Habilita el arrastre
-
-            let embedUrl = '';
-            let platformBorderClass = '';
-            let platformTagClass = '';
-
-            if (streamer.platform === 'twitch') {
-                embedUrl = `https://player.twitch.tv/?channel=${username}&parent=${TWITCH_PARENT_DOMAIN}&autoplay=true&muted=false`;
-                platformBorderClass = 'twitch-border';
-                platformTagClass = 'twitch-tag';
-            } else if (streamer.platform === 'kick') {
-                embedUrl = `https://player.kick.com/${username}`;
-                platformBorderClass = 'kick-border';
-                platformTagClass = 'kick-tag';
-            } else {
-                console.error('Plataforma desconocida para URL:', streamer.url);
-                return null;
-            }
-
-            card.classList.add(platformBorderClass);
-
-            const streamPlayerContainer = document.createElement('div');
-            streamPlayerContainer.classList.add('stream-embed-container');
-
-            const embed = document.createElement('iframe');
-            embed.classList.add('stream-embed');
-            embed.setAttribute('src', embedUrl);
-            embed.setAttribute('allowfullscreen', 'true');
-            embed.setAttribute('scrolling', 'no');
-            embed.setAttribute('frameborder', '0');
-
-            streamPlayerContainer.appendChild(embed);
-
-            const streamFooter = document.createElement('div');
-            streamFooter.classList.add('stream-footer');
-
-            const platformTagSpan = document.createElement('span');
-            platformTagSpan.classList.add('platform-tag');
-            platformTagSpan.classList.add(platformTagClass);
-            platformTagSpan.textContent = `${streamer.platform.charAt(0).toUpperCase() + streamer.platform.slice(1)}: ${username}`;
-
-            const toggleButton = document.createElement('button');
-            toggleButton.classList.add('control-btn');
-            toggleButton.classList.add('toggle-stream-btn');
-            toggleButton.textContent = 'Desactivar';
-            embed.dataset.originalSrc = embedUrl;
-
-            toggleButton.onclick = function() {
-                const isActive = card.dataset.isActive === 'true';
-                const playerIframe = card.querySelector('.stream-embed');
-
-                if (isActive) {
-                    playerIframe.setAttribute('src', 'about:blank');
-                    toggleButton.textContent = 'Activar';
-                    card.dataset.isActive = 'false';
-                } else {
-                    playerIframe.setAttribute('src', playerIframe.dataset.originalSrc);
-                    toggleButton.textContent = 'Desactivar';
-                    card.dataset.isActive = 'true';
-                }
-            };
-
-            streamFooter.appendChild(platformTagSpan);
-            streamFooter.appendChild(toggleButton);
-
-            card.appendChild(streamPlayerContainer);
-            card.appendChild(streamFooter);
-
-            // Eventos de arrastrar y soltar
-            card.addEventListener('dragstart', handleDragStart);
-            card.addEventListener('dragend', handleDragEnd);
-            card.addEventListener('dragenter', handleDragEnter);
-            card.addEventListener('dragover', handleDragOver);
-            card.addEventListener('dragleave', handleDragLeave);
-            card.addEventListener('drop', handleDrop);
-
-            return card;
-        }
-
-        function handleDragStart(event) {
-            draggedItem = event.target;
-            setTimeout(() => { // Timeout para asegurar que el evento dragstart se complete
-                event.target.classList.add('dragging');
-            }, 0);
-        }
-
-        function handleDragEnd(event) {
-            event.target.classList.remove('dragging');
-            Array.from(streamsContainer.children).forEach(card => {
-                card.classList.remove('drag-over');
-            });
-        }
-
-        function handleDragEnter(event) {
-            event.preventDefault();
-            event.target.classList.add('drag-over');
-        }
-
-        function handleDragOver(event) {
-            event.preventDefault();
-        }
-
-        function handleDragLeave(event) {
-            event.target.classList.remove('drag-over');
-        }
-
-        function handleDrop(event) {
-            event.preventDefault();
-            if (event.target.classList.contains('stream-card')) {
-                streamsContainer.insertBefore(draggedItem, event.target.nextSibling);
-                event.target.classList.remove('drag-over');
-            }
-        }
-
-        function addNextMafiaStream() {
-            if (teamMafiaMembers.length === 0) {
-                alert('La lista de "Team Mafia" no está definida o está vacía.');
-                return;
-            }
-
-            if (currentMafiaIndex >= teamMafiaMembers.length) {
-                alert('Ya se han añadido todos los streamers de la lista "Team Mafia".');
-                return;
-            }
-
-            const streamer = teamMafiaMembers[currentMafiaIndex];
-            const card = createStreamCard(streamer);
-            streamsContainer.appendChild(card);
-
-            currentMafiaIndex++;
-        }
-
-        function toggleAllStreams() {
-            const isCurrentlyActive = !document.body.classList.contains('disabled');
-            const allToggleButtons = streamsContainer.querySelectorAll('.toggle-stream-btn');
-
-            if (isCurrentlyActive) {
-                document.body.classList.add('disabled');
-                toggleStreamsButton.textContent = 'Activar Reproductores';
-                allToggleButtons.forEach(button => {
-                    const card = button.closest('.stream-card');
-                    button.textContent = 'Activar';
-                    card.dataset.isActive = 'false';
-                });
-
-            } else {
-                document.body.classList.remove('disabled');
-                toggleStreamsButton.textContent = 'Desactivar Reproductores';
-                allToggleButtons.forEach(button => {
-                    const card = button.closest('.stream-card');
-                    const playerIframe = card.querySelector('.stream-embed');
-                    if (playerIframe.dataset.originalSrc) {
-                        playerIframe.setAttribute('src', playerIframe.dataset.originalSrc);
-                        button.textContent = 'Desactivar';
-                        card.dataset.isActive = 'true';
-                    } else {
-                        button.textContent = 'Desactivar';
-                        card.dataset.isActive = 'true';
-                    }
-                });
-            }
-        }
-
-        function applyStreamSize() {
-            const minWidth = parseInt(minWidthSlider.value, 10);
-
-            if (isNaN(minWidth) || minWidth < 100) {
-                alert('Por favor, introduce un número válido mayor o igual a 100 para el ancho mínimo.');
-                minWidthSlider.value = 450;
-                return;
-            }
-
-            streamsContainer.style.gridTemplateColumns = `repeat(auto-fit, minmax(${minWidth}px, 1fr))`;
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            initialStreamers.forEach(streamer => {
-                const card = createStreamCard(streamer);
-                streamsContainer.appendChild(card);
-            });
-
-            applyStreamSize();
-
-            addMafiaStreamButton.addEventListener('click', addNextMafiaStream);
-            toggleStreamsButton.addEventListener('click', toggleAllStreams);
-            applySizeBtn.addEventListener('click', applyStreamSize);
-
-            const mobileMenuButton = document.querySelector('.mobile-menu-button');
-            const navLinks = document.querySelector('.nav-links');
-
-            if(mobileMenuButton && navLinks) {
-                mobileMenuButton.addEventListener('click', function() {
-                    navLinks.classList.toggle('active');
-                });
-
-                const links = document.querySelectorAll('.nav-links a');
-                links.forEach(link => {
-                    link.addEventListener('click', function() {
-                        setTimeout(() => {
-                            navLinks.classList.remove('active');
-                        }, 100);
-                    });
-                });
-            }
-
-            if (teamMafiaMembers.length === 0) {
-                addMafiaStreamButton.disabled = true;
-                addMafiaStreamButton.textContent = 'Lista Mafia Vacía';
-            }
-        });
-    </script>
 </body>
 </html>

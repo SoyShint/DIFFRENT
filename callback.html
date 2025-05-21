@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Conectando con Discord...</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      background-color: #0d0d0d;
+      color: white;
+      padding-top: 100px;
+    }
+    .spinner {
+      margin: 30px auto;
+      border: 6px solid #222;
+      border-top: 6px solid #5865F2;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+  <script>
+    // Redirigir automáticamente al backend para procesar el code
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get("code");
+    if (code) {
+      window.location.href = `/api/discord-auth?code=${code}`;
+    }
+  </script>
+</head>
+<body>
+  <h1>Conectando con Discord...</h1>
+  <div class="spinner"></div>
+  <p>Espera unos segundos mientras completamos tu autenticación.</p>
+</body>
+</html>

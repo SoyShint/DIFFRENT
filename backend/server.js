@@ -1,69 +1,48 @@
+require('dotenv').config();
 const express = require('express');
-const bodyParser = require('body-parser');
-const fetch = require('node-fetch');
+const axios = require('axios');
+const path = require('path');
 
 const app = express();
-app.use(bodyParser.json());
+const PORT = 3000;
 
-const clientId = 'TU_CLIENT_ID';
-const clientSecret = 'TU_CLIENT_SECRET';
-const redirectUri = 'http://localhost:3000/callback';
+app.use(express.static(path.join(__dirname, 'public')));
 
-let votes = { 1: 0, 2: 0, 3: 0 };
-let userVotes = {};
+app.get('/callback', async (req, res) => {
+  const code = req.query.code;
 
-app.post('/auth', async (req, res) => {
-    const { code } = req.body;
+  if (!code) return res.send("No se proporcionó el código.");
 
-    const response = await fetch('https://kick.com/oauth2/token', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({
-            client_id: clientId,
-            client_secret: clientSecret,
-            grant_type: 'authorization_code',
-            code,
-            redirect_uri: redirectUri,
-        }),
+  try {
+    const tokenRes = await axios.post('https://discord.com/api/oauth2/token', new URLSearchParams({
+      client_id: process.env.DISCORD_CLIENT_ID,
+      client_secret: process.env.DISCORD_CLIENT_SECRET,
+      grant_type: 'authorization_code',
+      code,
+      redirect_uri: process.env.REDIRECT_URI,
+      scope: 'identify'
+    }), {
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     });
 
-    if (response.ok) {
-        const data = await response.json();
-        const userInfo = await fetch('https://api.kick.com/v1/user', {
-            headers: { Authorization: `Bearer ${data.access_token}` },
-        });
+    const userRes = await axios.get('https://discord.com/api/users/@me', {
+      headers: {
+        Authorization: `Bearer ${tokenRes.data.access_token}`
+      }
+    });
 
-        if (userInfo.ok) {
-            const user = await userInfo.json();
-            res.json({ username: user.username });
-        } else {
-            res.status(500).send('Error al obtener información del usuario');
-        }
-    } else {
-        res.status(500).send('Error al intercambiar el código');
-    }
+    const user = userRes.data;
+
+    res.send(`
+      <h1>Bienvenido, ${user.username}#${user.discriminator}</h1>
+      <img src="https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png" width="100"/>
+    `);
+  } catch (err) {
+    console.error(err);
+    res.send("Error durante la autenticación.");
+  }
 });
 
-app.post('/vote', (req, res) => {
-    const { username, candidateId } = req.body;
-
-    if (userVotes[username]) {
-        return res.status(400).send('Ya has votado');
-    }
-
-    votes[candidateId]++;
-    userVotes[username] = candidateId;
-    res.send('Voto registrado');
+app.listen(PORT, () => {
+  console.log(`Servidor en http://localhost:${PORT}`);
 });
-
-app.get('/results', (req, res) => {
-    res.json(votes);
-});
-
-app.post('/reset', (req, res) => {
-    votes = { 1: 0, 2: 0, 3: 0 };
-    userVotes = {};
-    res.send('Votos reiniciados');
-});
-
-app.listen(3000, () => console.log('Servidor escuchando en http://localhost:3000'));
