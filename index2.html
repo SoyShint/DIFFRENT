@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diffrent - Streamer Uruguayo</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .discord-login-top {
+            position: fixed;
+            top: 10px;
+            right: 20px;
+            z-index: 1100;
+        }
+
+        .discord-login-top .discord-login-btn {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            background-color: #5865F2;
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .discord-login-top .discord-login-btn img {
+            margin-right: 8px;
+        }
+
+        .discord-login-top .discord-login-btn:hover {
+            background-color: #4752c4;
+        }
+
+        @media (max-width: 768px) {
+            .discord-login-top .discord-login-btn {
+                font-size: 12px;
+                padding: 6px 10px;
+            }
+        }
+    </style>
+</head>
+<body id="index">
+
+    <!-- Botón Discord arriba a la derecha -->
+    <div class="discord-login-top">
+        <a href="/.netlify/functions/discord-auth" class="discord-login-btn">
+            <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="Discord" width="20">
+            Iniciar sesión
+        </a>
+    </div>
+
+    <nav class="navbar" style="position: fixed; top: 0; left: 0; width: 100%; background-color: #000; color: white; z-index: 1000; padding: 10px 20px;">
+        <div class="nav-content">
+            <div class="mobile-menu-button">Inicio</div>
+            <div class="nav-links">
+                <a href="index.html#home">Inicio</a>
+                <a href="about.html">Sobre mí</a>
+                <a href="videos.html">Videos</a>
+                <a href="galeria.html">Galería</a>
+                <a href="envivo.html">En Vivo</a>
+                <a href="top.html">Comunidad</a>
+                <a href="mafia.html">Team Mafia</a>
+                <a href="TmafiaStream.html">Mafia Stream</a>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <img src="images/diff.png" alt="Diffrent" class="profile-img">
+            <h1 class="title">Diffrent</h1>
+            <p class="subtitle">Lider del clan_200 | Team mafia</p>
+            <div class="social-links">
+                <a href="https://kick.com/diffrent" target="_blank" class="kick"><i class="fas fa-play"></i> Kick</a>
+                <a href="https://twitch.tv/diffrent" target="_blank" class="twitch"><i class="fab fa-twitch"></i> Twitch</a>
+                <a href="https://www.instagram.com/diffrent.200/" target="_blank" class="instagram"><i class="fab fa-instagram"></i> Instagram</a>
+                <a href="https://x.com/diffrent_200" target="_blank" class="twitter"><i class="fab fa-twitter"></i> X (Twitter)</a>
+                <a href="mailto:contacto.dlffrent@gmail.com" target="_blank" class="email"><i class="fas fa-envelope"></i> Correo</a>
+                <a href="https://www.tiktok.com/@dlffrent_" target="_blank" class="tiktok"><i class="fab fa-tiktok"></i> TikTok</a>
+                <a href="https://discord.gg/jzz6DJCKzj" target="_blank" class="discord"><i class="fab fa-discord"></i> Discord</a>
+                <a href="https://www.youtube.com/@Diffrent_200/videos" target="_blank" class="youtube"><i class="fab fa-youtube"></i> YouTube</a>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
