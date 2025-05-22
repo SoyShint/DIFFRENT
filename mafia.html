@@ -1,40 +1,336 @@
-<!-- login.html -->
-<div class="login-container">
-  <h2>Iniciar sesión</h2>
-  <form>
-    <input type="text" placeholder="Nombre de usuario" required>
-    <input type="password" placeholder="Contraseña" required>
-    <button type="submit">Entrar</button>
-  </form>
-</div>
-<style>
-    .login-container {
-  background-color: #1e1e1e;
-  color: white;
-  padding: 2rem;
-  border-radius: 1rem;
-  width: 100%;
-  max-width: 400px;
-  margin: auto;
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
-}
-.login-container input,
-.login-container button {
-  width: 100%;
-  padding: 1rem;
-  margin-top: 1rem;
-  border: none;
-  border-radius: 0.5rem;
-  font-size: 1rem;
-}
-.login-container button {
-  background-color: #9146FF; /* color típico de Kick */
-  color: white;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-.login-container button:hover {
-  background-color: #772ce8;
-}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Atrapa al Círculo</title>
+  <style>
+    :root {
+      --primary-color: #00ff00;
+      --secondary-color: #9146FF;
+      --text-color: #ffffff;
+      --bg-color: #000000;
+      --card-bg: #111111;
+    }
 
-</style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      overflow-x: hidden;
+      padding-top: 60px; /* Espacio para navbar fija */
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      color: white;
+      z-index: 1000;
+      padding: 10px 20px;
+      backdrop-filter: blur(10px);
+    }
+
+    .nav-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: bold;
+      padding: 5px 10px;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    .nav-links a:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .mobile-menu-button {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    h1 {
+      margin-top: 20px;
+      color: var(--primary-color);
+      text-align: center;
+    }
+
+    #controls {
+      margin: 15px 0;
+      text-align: center;
+    }
+
+    select, button {
+      padding: 10px;
+      font-size: 16px;
+      margin: 5px;
+      border-radius: 8px;
+      border: none;
+      background-color: var(--card-bg);
+      color: var(--text-color);
+    }
+
+    #game {
+      position: relative;
+      width: 100vw;
+      height: 70vh;
+      max-width: 800px;
+      background-color: var(--card-bg);
+      margin: 0 auto;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    #circle {
+      width: 60px;
+      height: 60px;
+      background: var(--primary-color);
+      border-radius: 50%;
+      position: absolute;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      box-shadow: 0 0 15px var(--primary-color);
+    }
+
+    #score {
+      font-size: 20px;
+      margin-top: 10px;
+      color: var(--text-color);
+      text-align: center;
+    }
+
+    #gameOver {
+      font-size: 28px;
+      color: var(--secondary-color);
+      display: none;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @media screen and (max-width: 768px) {
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        padding: 10px 0;
+        backdrop-filter: blur(10px);
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .nav-links a {
+        padding: 15px 20px;
+      }
+
+      .mobile-menu-button {
+        display: block;
+      }
+
+      body {
+        padding-top: 50px;
+      }
+    }
+
+    .discord-login-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+    }
+
+    .discord-login-btn {
+      background-color: #5865F2;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-content">
+      <button class="mobile-menu-button">☰</button>
+      <div class="nav-links">
+        <a href="index.html#home">Inicio</a>
+        <a href="about.html">Sobre mí</a>
+        <a href="videos.html">Videos</a>
+        <a href="galeria.html">Galería</a>
+        <a href="envivo.html">En Vivo</a>
+        <a href="top.html">Comunidad</a>
+        <a href="mafia.html">Team Mafia</a>
+        <a href="TmafiaStream.html">Mafia Stream</a>
+      </div>
+    </div>
+  </nav>
+
+  <h1>Atrapa al Círculo 🎯</h1>
+
+  <div id="controls">
+    <label>Dificultad:
+      <select id="difficulty">
+        <option value="easy">Fácil</option>
+        <option value="medium">Medio</option>
+        <option value="hard">Difícil</option>
+      </select>
+    </label>
+
+    <label>Modo:
+      <select id="mode">
+        <option value="time">Por tiempo (30s)</option>
+        <option value="fail">Por fallos (3 fallos)</option>
+        <option value="score">Por puntuación (10 puntos)</option>
+      </select>
+    </label>
+
+    <button onclick="startGame()">Jugar</button>
+  </div>
+
+  <div id="score">Puntuación: 0</div>
+  <div id="game">
+    <div id="circle" class="hidden"></div>
+  </div>
+  <div id="gameOver">¡Juego Terminado! 😢</div>
+
+  <!-- Audio -->
+  <audio id="clickSound" src="https://www.soundjay.com/button/beep-07.wav" preload="auto"></audio>
+
+  <script>
+    // Menú móvil
+    const mobileMenuButton = document.querySelector('.mobile-menu-button');
+    const navLinks = document.querySelector('.nav-links');
+
+    mobileMenuButton.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+
+    // Juego
+    const circle = document.getElementById('circle');
+    const scoreEl = document.getElementById('score');
+    const gameOverEl = document.getElementById('gameOver');
+    const game = document.getElementById('game');
+    const difficultySelect = document.getElementById('difficulty');
+    const modeSelect = document.getElementById('mode');
+    const clickSound = document.getElementById('clickSound');
+
+    let score = 0;
+    let fails = 0;
+    let moveInterval = null;
+    let timeoutFail = null;
+    let gameTimer = null;
+
+    const speeds = {
+      easy: 1000,
+      medium: 600,
+      hard: 350
+    };
+
+    function randomPosition() {
+      const maxX = game.clientWidth - circle.clientWidth;
+      const maxY = game.clientHeight - circle.clientHeight;
+      const x = Math.floor(Math.random() * maxX);
+      const y = Math.floor(Math.random() * maxY);
+      circle.style.left = x + 'px';
+      circle.style.top = y + 'px';
+    }
+
+    function moveCircle(speed, mode) {
+      clearInterval(moveInterval);
+      clearTimeout(timeoutFail);
+
+      moveInterval = setInterval(() => {
+        randomPosition();
+
+        if (mode === 'fail') {
+          timeoutFail = setTimeout(() => {
+            fails++;
+            if (fails >= 3) endGame();
+          }, speed);
+        }
+
+      }, speed);
+    }
+
+    function startGame() {
+      score = 0;
+      fails = 0;
+      scoreEl.textContent = 'Puntuación: 0';
+      gameOverEl.style.display = 'none';
+      circle.classList.remove('hidden');
+
+      const difficulty = difficultySelect.value;
+      const mode = modeSelect.value;
+      const speed = speeds[difficulty];
+
+      randomPosition();
+      moveCircle(speed, mode);
+
+      if (mode === 'time') {
+        gameTimer = setTimeout(() => {
+          endGame();
+        }, 30000);
+      }
+    }
+
+    function endGame() {
+      clearInterval(moveInterval);
+      clearTimeout(timeoutFail);
+      clearTimeout(gameTimer);
+      gameOverEl.style.display = 'block';
+      circle.classList.add('hidden');
+    }
+
+    circle.addEventListener('click', () => {
+      score++;
+      scoreEl.textContent = 'Puntuación: ' + score;
+      clickSound.currentTime = 0;
+      clickSound.play();
+
+      if (modeSelect.value === 'score' && score >= 10) {
+        endGame();
+      }
+    });
+  </script>
+</body>
+</html>
