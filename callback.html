@@ -2,84 +2,135 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Conectando con Discord...</title>
+  <title>Procesando login...</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Font Awesome para íconos -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <style>
     body {
-      font-family: sans-serif;
+      background: #0f0f0f;
+      color: #fff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
       text-align: center;
-      background-color: #0d0d0d;
-      color: white;
-      padding-top: 100px;
     }
-    .spinner {
-      margin: 30px auto;
-      border: 6px solid #222;
-      border-top: 6px solid #5865F2;
+
+    .loader {
+      border: 5px solid rgba(83, 252, 24, 0.3);
+      border-top: 5px solid #53FC18;
       border-radius: 50%;
-      width: 40px;
-      height: 40px;
+      width: 50px;
+      height: 50px;
       animation: spin 1s linear infinite;
+      margin: 0 auto 20px;
     }
+
     @keyframes spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
+
+    .error {
+      color: #ff5e5e;
+      margin-top: 20px;
+    }
   </style>
-</head>
-<body>
-  <h1>Conectando con Discord...</h1>
-  <div class="spinner"></div>
-  <p>Espera unos segundos mientras completamos tu autenticación.</p>
 
   <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get("code");
+    // Configuración de Kick
+    const KICK_CONFIG = {
+      tokenUrl: "/.netlify/functions/kick-auth",
+      redirectUri: "https://kickprueba.netlify.app/callback.html"
+    };
 
-    const clientId = "1374873687487942796";
-    const clientSecret = "TU_CLIENT_SECRET"; // ⚠️ Necesitas proteger esto en un backend real
-    const redirectUri = "https://diffrent.netlify.app/callback";
+    document.addEventListener('DOMContentLoaded', async function () {
+      const urlParams = new URLSearchParams(window.location.search);
+      const code = urlParams.get('code');
+      const error = urlParams.get('error');
+      const statusElement = document.getElementById('status');
 
-    if (code) {
-      // Intercambia el código por el token
-      fetch("https://discord.com/api/oauth2/token", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: new URLSearchParams({
-          client_id: clientId,
-          client_secret: clientSecret,
-          grant_type: "authorization_code",
-          code: code,
-          redirect_uri: redirectUri
-        })
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.access_token) {
-          // Usa el token para obtener datos del usuario
-          return fetch("https://discord.com/api/users/@me", {
-            headers: {
-              Authorization: `Bearer ${data.access_token}`
-            }
-          });
-        } else {
-          throw new Error("Token inválido");
+      if (error) {
+        statusElement.innerHTML = `
+          <div class="error">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h2>Error en la autenticación</h2>
+            <p>${error}</p>
+          </div>
+          <p>Serás redirigido a la página principal en 5 segundos...</p>
+        `;
+        setTimeout(() => window.location.href = 'index.html', 5000);
+        return;
+      }
+
+      if (!code) {
+        statusElement.innerHTML = `
+          <div class="error">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h2>Código de autorización no recibido</h2>
+          </div>
+          <p>Serás redirigido a la página principal en 5 segundos...</p>
+        `;
+        setTimeout(() => window.location.href = 'index.html', 5000);
+        return;
+      }
+
+      try {
+        const code_verifier = localStorage.getItem('pkce_verifier');
+        if (!code_verifier) throw new Error('No se encontró el code_verifier');
+
+        const response = await fetch(KICK_CONFIG.tokenUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            code,
+            redirect_uri: KICK_CONFIG.redirectUri,
+            code_verifier
+          })
+        });
+
+        if (!response.ok) {
+          let errorMessage = 'Error en el intercambio de tokens';
+          try {
+            const errorData = await response.json();
+            errorMessage = errorData.error || errorMessage;
+          } catch (_) {
+            // JSON malformado o error 500
+          }
+          throw new Error(errorMessage);
         }
-      })
-      .then(response => response.json())
-      .then(user => {
-        localStorage.setItem("discordUser", JSON.stringify(user));
-        window.location.href = "/index.html";
-      })
-      .catch(error => {
-        console.error("Error en la autenticación:", error);
-        document.body.innerHTML = "<h1>Error al conectar con Discord</h1><p>Intenta nuevamente.</p>";
-      });
-    } else {
-      document.body.innerHTML = "<h1>No se recibió ningún código de Discord</h1>";
-    }
+
+        const tokenData = await response.json();
+
+        // Guarda token en localStorage y redirige
+        localStorage.setItem("kickToken", JSON.stringify(tokenData));
+        window.location.href = "index.html";
+
+      } catch (err) {
+        console.error('Error en el callback:', err);
+        statusElement.innerHTML = `
+          <div class="error">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h2>Error en el proceso de login</h2>
+            <p>${err.message}</p>
+          </div>
+          <p>Serás redirigido a la página principal en 5 segundos...</p>
+        `;
+        setTimeout(() => window.location.href = 'index.html', 5000);
+      }
+    });
   </script>
+</head>
+<body>
+  <div id="status">
+    <div class="loader"></div>
+    <h2>Procesando autenticación</h2>
+    <p>Por favor espera mientras completamos el inicio de sesión...</p>
+  </div>
 </body>
 </html>
